@@ -6,38 +6,62 @@
     <title>Kenbis 2 - Stratejik Analiz Sistemi</title>
     <style>
         body { font-family: 'Inter', sans-serif; background: #0a0f1e; color: #e2e8f0; padding: 20px; line-height: 1.6; }
-        .container { max-width: 1000px; margin: auto; background: #161f32; padding: 35px; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); border: 1px solid #1e293b; }
+        .container { max-width: 1100px; margin: auto; background: #161f32; padding: 35px; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); border: 1px solid #1e293b; }
         
+        /* Logo ve Başlık */
         .header { text-align: center; margin-bottom: 35px; }
         .kb-logo { font-size: 64px; font-weight: 900; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px; }
         .kb-sub { font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 6px; margin-top: -10px; }
         
+        /* Form Alanı */
         .form-section { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 25px; }
         label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 5px; font-weight: bold; text-transform: uppercase; }
         input { width: 100%; padding: 14px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; font-size: 15px; box-sizing: border-box; }
         button { width: 100%; padding: 20px; background: linear-gradient(90deg, #38bdf8, #818cf8); color: #0a0f1e; border: none; border-radius: 12px; font-weight: 900; font-size: 18px; cursor: pointer; text-transform: uppercase; margin-bottom: 30px; transition: 0.3s; }
         button:hover { transform: scale(1.01); box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); }
 
+        /* Sonuç Panelleri */
         .sonuc-ekrani { display: none; }
-        .evre-paneli { background: #450a0a; border: 2px solid #991b1b; padding: 25px; border-radius: 20px; margin-bottom: 35px; }
+        .vakit-paneli { background: #450a0a; border: 2px solid #991b1b; padding: 25px; border-radius: 20px; margin-bottom: 35px; }
         
-        .ev-izgarasi { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
-        .ev-kart { background: #1e293b; padding: 25px; border-radius: 20px; border-top: 4px solid #38bdf8; position: relative; transition: 0.3s; }
-        .ev-no { font-size: 28px; font-weight: 900; color: #334155; position: absolute; right: 20px; top: 15px; }
+        .ev-izgarasi { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .ev-kart { background: #1e293b; padding: 30px; border-radius: 20px; border-top: 4px solid #38bdf8; position: relative; transition: 0.3s; cursor: help; }
         
-        .azam-kart { border-top: 4px solid #f59e0b !important; background: #451a03 !important; box-shadow: 0 0 30px rgba(245, 158, 11, 0.2); }
-        .azam-uyari { color: #f59e0b; font-weight: 900; font-size: 14px; display: block; margin-bottom: 8px; letter-spacing: 1px; }
+        /* Ev Numarası - Çok Belirgin */
+        .ev-no { font-size: 48px; font-weight: 900; color: rgba(51, 65, 85, 0.4); position: absolute; right: 20px; top: 10px; z-index: 1; }
+        
+        /* İsmi Azam ve Sıkıntılı Durum */
+        .azam-kart { border-top: 5px solid #f59e0b !important; background: #451a03 !important; box-shadow: 0 0 30px rgba(245, 158, 11, 0.2); }
+        .azam-label { color: #f59e0b; font-weight: 900; font-size: 14px; display: block; margin-bottom: 10px; text-transform: uppercase; border: 1px solid #f59e0b; padding: 5px; text-align: center; border-radius: 8px; }
+        .sıkıntılı-text { color: #f87171; font-weight: bold; font-size: 13px; display: block; margin-bottom: 5px; }
 
-        .badge { font-size: 10px; padding: 4px 10px; border-radius: 6px; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; display: inline-block; }
+        .badge { font-size: 10px; padding: 4px 10px; border-radius: 6px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: inline-block; }
         .celal { background: #ef4444; color: white; }
         .cemal { background: #10b981; color: white; }
         
-        .esma-box { background: #0f172a; padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px dashed #38bdf8; }
-        .etki-notu { font-size: 13px; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 5px; }
-
+        .esma-box { background: #0f172a; padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px dashed #38bdf8; position: relative; z-index: 2; }
+        
+        /* Footer */
         .footer { text-align: center; margin-top: 60px; border-top: 1px solid #1e293b; padding-top: 30px; color: #64748b; font-size: 13px; }
         .wa-btn { display: inline-block; margin-top: 20px; padding: 14px 28px; background: #25d366; color: white; border-radius: 50px; text-decoration: none; font-weight: 800; font-size: 16px; transition: 0.3s; }
-        .wa-btn:hover { background: #128c7e; transform: translateY(-3px); }
+
+        /* Tooltip (Açıklama) Stili */
+        .ev-kart:hover::after {
+            content: attr(data-konu);
+            position: absolute;
+            bottom: 105%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #334155;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            width: 200px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
@@ -49,16 +73,16 @@
     </div>
 
     <div class="form-section">
-        <div><label>İsim Soyisim</label><input type="text" id="isim" placeholder="Sayın..."></div>
+        <div><label>Sayın (İsim Soyisim)</label><input type="text" id="isim" placeholder="Adınız"></div>
         <div><label>Ebced Değeri</label><input type="number" id="ebced" placeholder="Değer"></div>
-        <div><label>Doğum Tarihi</label><input type="date" id="tarih"></div>
+        <div><label>Miladi Doğum Tarihi</label><input type="date" id="tarih"></div>
     </div>
-    <button onclick="kenbisDerinAnaliz()">12 Ev Analizini Görüntüle</button>
+    <button onclick="kenbisAnalizModulu()">Analizi Görüntüle</button>
 
     <div id="sonucAlani" class="sonuc-ekrani">
-        <div class="evre-paneli">
-            <h3 id="hitapMesaji" style="margin-top:0; color:#38bdf8;"></h3>
-            <p id="evreGozlemi" style="color:#f87171; font-weight:bold; margin-bottom:0;"></p>
+        <div class="vakit-paneli">
+            <h3 id="hitap" style="margin-top:0; color:#38bdf8;"></h3>
+            <p id="vakitGozlemi" style="color:#f87171; font-weight:bold; margin-bottom:0;"></p>
         </div>
         <div class="ev-izgarasi" id="evListesi"></div>
     </div>
@@ -70,29 +94,57 @@
 </div>
 
 <script>
-const KOD_KUTUPHANESI = {
-    "KOD_1": { 1: ["El-Evvel", "El-Metin", "Mâlikül-Mülk", "El-Vâris", "El-Mecid", "El-Müntakim"], 2: ["El-Gani", "El-Hak", "El-Metin"], 3: ["El-Hay", "El Fettah", "El-Kayyum", "Es-Semi'", "El-Azim"], 4: ["Er-Rahman", "El-Afüv", "Er-Reşit", "El-Müheymin"], 5: ["El-Mütekebbir", "El-Hay", "El-Kayyum", "El-Hak", "El-Baki", "Es-Selâm", "El-Muzil", "El-Muiz", "El-Muhyi", "El-Mâcid"], 6: ["El-Kayyum", "El-Hak", "El-Basir", "El-Melik", "El-Muid"], 7: ["El-Adl", "El-Halim", "El-Latif", "El-Vehhab", "El-Musavvir"], 8: ["El-Kahhar", "Mâlikül-Mülk", "El-Vâris", "El-Mecid"], 9: ["El-Kerim", "El-Gaffar", "El-Müntakim", "El Basit", "El-Kâbid", "El-Adl", "El-Gani", "El-Vekil"], 10: ["El-Kâbiz", "El-Kerim", "El-Metin"], 11: ["El-Latif", "El-Hafiz", "El-Kerim", "El-Metin"], 12: ["El-Musavvir", "El-Vacid", "En-Nafi'"] },
-    "KOD_2": { 1: ["El-Cebbar", "El-Evvel", "El-Celil", "El-Vahit", "El-Ehad", "El-Aziz", "El-Muktedir"], 2: ["El-Hasib", "El-Hafız", "El-Berr", "El-Kavi"], 3: ["El-Bais", "El-Hay", "El-Hâlık"], 4: ["Er-Rahîm", "Er-Rahman", "El-Mümit", "Er-Reşit", "El-Batın", "Eş-Şükür", "El-Müheymin", "El-Hafız", "Er-Rakip"], 5: ["Hakîm", "Evvel", "En-Nur"], 6: ["Er-Rauf", "El-Muhsi", "El-Veli", "El-Habir"], 7: ["El-Cami", "El-Kavi", "El-Vedüd", "El-Mümin"], 8: ["El-Muktedir", "El-Mümit", "El-Müteali", "El-Vali", "El-Bais", "El-Hasib", "El-Kavi"], 9: ["El-Gafur", "El-Mukaddim", "Es-Samet", "El-Müteali", "El-Ber", "El-Hafız", "Et-Tevvab"], 10: ["El-Mâni’", "El-Macid", "El-Muahhir", "Er-Rakip", "Es-Sabur"], 11: ["El-Kuddüs", "El-Hakîm", "El-Muahhir", "El-Âlim", "Ez-Zahir", "El-Mukit", "El-Mukaddim", "El-Kadir"], 12: ["Es-Samet", "El-Müteali", "El-Ber", "El-Hafız", "Et-Tevvab"] },
-    "KOD_3": { 1: ["El-Metin", "El-Vali", "Mâlikül-Mülk", "El-Vâris", "El-Müntakim", "Ed-Dâr"], 2: ["El-Gani", "El-Hak", "El-Metin"], 3: ["El-Hay", "El-Hâlık", "El-Muzil", "Es-Semi'", "El-Muid"], 4: ["El-Afüv"], 5: ["El-Mütekebbir", "El-Hay", "El-Baki", "Es-Selâm", "El-Muiz", "El-Muhyi"], 6: ["El-Hak", "El-Basir", "El-Melik", "El-Muid"], 7: ["El-Adl", "El-Halim", "El-Mümin", "El-Vedüd"], 8: ["El-Kahhar", "El-Müteali", "El-Habir", "El-Vali", "Mâlikül-Mülk", "El-Vâris", "El-Müntakim", "Ed-Dâr"], 9: ["El-Kerim", "Er-Rezzak", "El-Müntakim", "El-Vali", "El Basit", "El-Müteali", "El-Adl", "El-Gani", "El-Aliy"], 10: ["El-Hadi", "Ed Dar", "El-Vâsi’", "El-Kerim", "Zül-Celâli vel-İkram", "El-Metin"], 11: ["El-Hafiz", "El-Vâsi’", "El-Kerim", "Zül-Celâli vel-İkram", "El-Metin"], 12: ["El-Vacid", "El-Habir", "El Basit", "El-Müteali", "El-Adl", "El-Gani", "El-Aliy"] },
-    "KOD_4": { 1: ["El-Cebbar", "Evvel", "El-Celil", "El-Vahit/El-Ehad", "El-Muktedir", "El-Mecid", "El-Kavi"], 2: ["El-Hasib", "El-Hafız", "El-Kavi"], 3: ["El-Bais", "El Fettah", "El-Kayyum"], 4: ["Er-Rahîm", "Er-Rauf", "El-Veli", "Er-Reşit", "El-Batın", "El-Müheymin", "El-Hafız", "Er-Rakip"], 5: ["El-Azim", "Hakîm", "Evvel", "El-Mâcid"], 6: ["El-Vekil", "El-Kayyum"], 7: ["El-Cami", "El-Latif", "El-Musavvir", "El-Kavi"], 8: ["El-Muktedir", "El-Bais", "El-Hasib", "El-Mecid", "El-Kavi"], 9: ["El-Gafur", "El-Gaffar", "El-Kâbid", "Es-Samet", "El-Hafız"], 10: ["El-Kâbiz", "El-Mâni’", "El Macid", "El-Muahhir", "Er-Rakip", "Es-Sabur", "El-Mukit", "El-Kadir"], 11: ["El-Latif", "El-Kuddüs", "El-Hakîm", "El-Muahhir", "El-Âlim", "Ez Zahir", "El-Mukit", "El-Kadir"], 12: ["En-Nafi'", "El-Afüv", "El-Batın", "Er-Rauf", "El-Musavvir", "El-Kâbid", "Es-Samet", "El-Hafız"] },
-    "KOD_5": { 1: ["El-Aziz"], 2: ["El-Gani", "El-Hak", "El-Berr"], 3: ["El-Hay", "El-Hâlık", "Es-Semi’"], 4: ["El-Mümit", "Eş-Şükür"], 5: ["El-Hay", "El-Muiz", "En-Nur"], 6: ["El-Muhsi", "El-Muksid", "El-Hak", "El-Melik", "El-Muid"], 7: ["El-Halim", "El-Mümin", "El-Vedüd"], 8: ["El-Mümit", "El-Müteali", "El-Habir"], 9: ["El-Kerim", "Er-Rezzak", "El Mukaddim", "El-Müntakim", "El-Vali"], 10: ["El-Hadi", "Ed Dar"], 11: ["El-Vâsi’", "El-Kerim", "Zül-Celâli vel-İkram", "El Mukaddim"], 12: ["El-Habir", "El Basit", "El-Müteali", "El-Berr", "Et-Tevvab", "El-Gani", "El-Aliy"] },
-    "KOD_6": { 1: ["El-Cebbar", "Evvel", "El-Celil", "El-Metin", "El-Vahit/El-Ehad", "Mâlikül-Mülk", "El-Vâris", "El-Mecid", "El-Kavi"], 2: ["El-Hasib", "El-Hafız", "El-Berr", "El-Metin", "El-Kavi"], 3: ["El Fettah", "El-Azim", "Er-Rauf"], 4: ["Er-Reşit", "Er-Rahman", "El-Afüv", "El-Batın", "El-Müheymin", "El-Hafız"], 5: ["El-Mütekebbir", "Evvel", "El-Baki", "Es-Selâm", "El-Muhyi", "El-Mâcid"], 6: ["El-Kayyum", "Er-Rauf", "El-Basir", "El-Veli"], 7: ["El-Adl", "El-Latif", "El-Vehhab", "El-Musavvir", "El-Kavi"], 8: ["El-Hasib", "Mâlikül-Mülk", "El-Vâris", "El-Mecid", "El-Kavi"], 9: ["El-Gafur", "El-Gaffar", "El-Kâbid", "Es-Samet", "El-Vekil", "El-Hafız", "El-Adl"], 10: ["El-Kâbiz", "El-Mâni’", "El-Muahhir", "Es-Sabur", "El-Metin", "El-Mukit", "El-Kadir"], 11: ["El-Latif", "El-Hafiz", "El-Kuddüs", "El-Muahhir", "Ez Zahir", "El-Metin", "El-Mukit", "El-Kadir"], 12: ["El-Musavvir", "El-Vacid", "En-Nafi'", "El-Vekil", "El-Kâbid", "Es-Samet", "El-Hafız", "El-Adl"] },
-    "KOD_7": { 1: ["El-Aziz", "El-Muktedir", "El-Vali", "El-Muksid", "El-Müntakim", "Ed-Dâr"], 2: ["El-Berr"], 3: ["El-Hay", "El-Hâlık", "El-Bais", "Es-Semi’"], 4: ["Er-Rahîm", "El-Mümit", "Eş-Şükür", "Er-Rakip"], 5: ["El-Hay", "En-Nur", "Hakîm", "El-Hak", "El-Muiz"], 6: ["El-Muhsi", "El-Muksid", "El-Habir", "El-Hak", "El-Melik"], 7: ["El-Cami", "El-Mümin", "El-Vedüd"], 8: ["El-Kahhar", "El-Muktedir", "El-Mümit", "El-Müteali", "El-Bais", "El-Habir", "El-Müntakim", "El-Vali", "El-Muksid", "Ed-Dâr"], 9: ["El-Kerim", "Er-Rezzak", "El Mukaddim", "El-Müntakim", "El-Vali", "El-Müteali", "El-Ber", "El Basit", "El-Aliy", "Et-Tevvab"], 10: ["El-Hadi", "El Macid", "Ed Dar", "Er-Rakip", "El-Vâsi’", "El-Kerim", "Zül-Celâli vel-İkram", "El Mukaddim"], 11: ["El-Hakîm", "El-Âlim", "El-Vâsi’", "El-Kerim", "Zül-Celâli vel-İkram", "El Mukaddim"], 12: ["El Basit", "El-Müteali", "El-Ber", "Et-Tevvab", "El-Aliy"] },
-    "KOD_8": { 1: ["El-Vahit/El-Ehad", "El-Celil", "El-Metin"], 2: ["El-Gani", "El-Metin"], 3: ["El-Muzil", "El Fettah", "El-Kayyum"], 4: ["El-Veli", "Er-Reşit", "El-Müheymin"], 5: ["El-Azim", "El-Mütekebbir", "Evvel", "El-Baki", "Es-Selâm", "El-Muhyi", "El-Mâcid"], 6: ["El-Vekil", "El-Kayyum", "El-Muid"], 7: ["El-Adl", "El-Halim", "El-Latif", "El-Vehhab", "El-Musavvir"], 8: ["Mâlikül-Mülk", "El-Vâris", "El-Mecid"], 9: ["El-Gaffar", "El-Kâbid", "El-Adl", "El-Gani"], 10: ["El-Kâbiz", "El-Muahhir", "Es-Sabur"], 11: ["El-Latif", "El-Hafiz", "El-Muahhir", "El-Metin", "El-Mukit"], 12: ["El-Vacid", "En-Nafi'", "El-Afüv", "El-Musavvir", "El-Kâbid", "El-Adl", "El-Gani"] },
-    "KOD_9": { 1: ["El-Cebbar", "El-Aziz", "El-Muktedir", "El-Vali", "El-Muksid", "Ed-Dâr", "El-Kavi"], 2: ["El-Hasib", "El-Hafız", "El-Berr", "El-Kavi"], 3: ["El-Hâlık", "El-Bais"], 4: ["Er-Rahîm", "Er-Rauf", "El-Mümit", "El-Batın", "Eş-Şükür", "El-Hafız", "Er-Rakip"], 5: ["Hakîm", "El-Muiz", "En-Nur"], 6: ["El-Muhsi", "El-Muksid"], 7: ["El-Cami", "El-Mümin", "El-Vedüd", "El-Kavi"], 8: ["El-Muktedir", "El-Mümit", "El-Müteali", "El-Bais", "El-Hasib", "El-Habir", "El-Vali", "Ed-Dâr", "El-Kavi"], 9: ["Er-Rezzak", "El-Gafur", "El-Müntakim", "El Mukaddim", "El-Vali"], 10: ["El-Hadi", "El-Mâni’", "El Macid", "Ed Dar", "El-Vâsi’", "Zül-Celâli vel-İkram", "El Mukaddim", "El-Kadir"], 11: ["El-Kuddüs", "El-Hakîm", "El-İlim", "Ez Zahir", "El-Vâsi’", "Zül-Celâli vel-İkram", "El Mukaddim", "El-Kadir"], 12: ["El-Habir", "El-Batın", "Er-Rauf", "El-Aliy", "Et-Tevvab", "Es-Samet", "El-Müteali", "El-Ber", "El-Hafız"] }
+const EV_KONULARI = {
+    1: "Kişilik, karakter, dış görünüş ve benlik bilinci.",
+    2: "Maddi kaynaklar, rızık, özdeğer ve kazançlar.",
+    3: "Yakın çevre, kardeşler, iletişim ve temel eğitim.",
+    4: "Aile, kökler, ev ve iç dünyadaki güven hissi.",
+    5: "Yaratıcılık, çocuklar, hobiler ve aşk hayatı.",
+    6: "Hizmet, rutin işler, sağlık ve çalışma koşulları.",
+    7: "Eş, evlilik, ortaklıklar ve açık düşmanlıklar.",
+    8: "Dönüşüm, ortaklaşa paralar, krizler ve sırlar.",
+    9: "Yüksek ilim, inançlar, uzak yolculuklar ve vizyon.",
+    10: "Kariyer, toplum önündeki statü ve sorumluluklar.",
+    11: "Sosyal gruplar, idealler, umutlar ve arkadaşlıklar.",
+    12: "Bilinçaltı, gizli düşmanlar, izolasyon ve teslimiyet."
 };
 
-const ZAMAN_ZEMIN = {
-    "MARS": { bas: "03-21", bit: "04-03", risk: "Yön kaybı, disiplinsizlik ve yaşam enerjisi blokajı.", azamEvler: [1, 8], kodlar: { "KOD_1": "Dışsal-Cemal", "KOD_8": "Alt Esma-Celal", "KOD_9": "Karma-Celal" } },
-    "VENUS": { bas: "04-20", bit: "05-04", risk: "Değer algısında bozulma ve iffet sınavı düğümü.", azamEvler: [2, 7], kodlar: { "KOD_1": "Karma-Cemal", "KOD_8": "Karma-Celal" } },
-    "MERKUR": { bas: "05-22", bit: "06-04", risk: "İhlas eksikliği ve zihinsel karmaşa düğümü.", azamEvler: [3, 6], kodlar: { "KOD_3": "Karma-Celal/Cemal", "KOD_9": "Dışsal-Celal" } },
-    "AY": { bas: "06-21", bit: "07-05", risk: "Duygusal kölelik ve epifiz bezi blokajları.", azamEvler: [4], kodlar: { "KOD_2": "Karma-Celal/Cemal", "KOD_6": "Karma-Celal/Cemal" } },
-    "GUNES": { bas: "07-29", bit: "08-07", risk: "Ego ve otorite çatışmaları, kalp merkezi düğümü.", azamEvler: [5], kodlar: { "KOD_1": "Karma-Cemal", "KOD_3": "Karma-Cemal" } },
-    "JUPITER": { bas: "11-22", bit: "12-05", risk: "Yetkinlik ve rüşt sınavı, zillet düğümü.", azamEvler: [9, 12], kodlar: { "KOD_3": "Karma-Celal/Cemal", "KOD_7": "Karma-Celal/Cemal" } },
-    "SATURN": { bas: "01-20", bit: "02-03", risk: "İstikrarsızlık ve rızık telaşı düğümü.", azamEvler: [10, 11], kodlar: { "KOD_3": "Karma-Celal/Cemal" } }
+const ISMI_AZAM_MAP = {
+    1: ["VENUS", "GUNES"],
+    2: ["AY"],
+    3: ["MERKUR", "JUPITER", "VENUS", "SATURN", "GUNES"],
+    4: ["AY"],
+    5: ["JUPITER"],
+    6: ["AY"],
+    7: ["JUPITER"],
+    8: ["VENUS"],
+    9: ["MARS"]
 };
 
-function kenbisDerinAnaliz() {
+const VAKIT_DONGUSU = [
+    { gez: "MARS", burc: "Koç", bas: "03-20", bit: "04-19", evler: [1, 8] },
+    { gez: "VENUS", burc: "Boğa", bas: "04-20", bit: "05-19", evler: [2, 7] },
+    { gez: "MERKUR", burc: "İkizler", bas: "05-20", bit: "06-19", evler: [3, 6] },
+    { gez: "AY", burc: "Yengeç", bas: "06-20", bit: "07-19", evler: [4] },
+    { gez: "GUNES", burc: "Aslan", bas: "07-20", bit: "08-19", evler: [5] },
+    { gez: "MERKUR", burc: "Başak", bas: "08-20", bit: "09-19", evler: [3, 6] },
+    { gez: "VENUS", burc: "Terazi", bas: "09-20", bit: "10-19", evler: [2, 7] },
+    { gez: "MARS", burc: "Akrep", bas: "10-20", bit: "11-19", evler: [1, 8] },
+    { gez: "JUPITER", burc: "Yay", bas: "11-20", bit: "12-18", evler: [9, 12] },
+    { gez: "SATURN", burc: "Oğlak", bas: "12-20", bit: "01-19", evler: [10, 11] },
+    { gez: "SATURN", burc: "Kova", bas: "01-20", bit: "02-19", evler: [10, 11] },
+    { gez: "JUPITER", burc: "Balık", bas: "02-20", bit: "03-19", evler: [9, 12] }
+];
+
+const ESMA_BANKASI = {
+    "KOD_1": { 1: ["Ya Malik", "Ya Kuddüs"], 5: ["Ya Hay", "Ya Kayyum"], 2: ["Ya Gani"], 7: ["Ya Vedüd"] },
+    "KOD_3": { 3: ["Ya Ali", "Ya Azim"], 9: ["Ya Hakim"], 10: ["Ya Fettah"] },
+    "KOD_8": { 2: ["Ya Kafi"], 7: ["Ya Gani"], 8: ["Ya Muktedir"] },
+    "KOD_9": { 1: ["Ya Malik", "Ya Müntakim"], 8: ["Ya Kahhar"] }
+    // Diğer kodlar verildikçe aynı hiyerarşiyle eklenecek.
+};
+
+function kenbisAnalizModulu() {
     const ad = document.getElementById('isim').value || "Ziyaretçi";
     const ebced = parseInt(document.getElementById('ebced').value);
     const tarihStr = document.getElementById('tarih').value;
@@ -104,45 +156,41 @@ function kenbisDerinAnaliz() {
     const kodKey = "KOD_" + kodNo;
 
     document.getElementById('sonucAlani').style.display = 'block';
-    document.getElementById('hitapMesaji').innerText = `Sayın ${ad}, Stratejik Analiziniz Tamamlandı:`;
+    document.getElementById('hitap').innerText = `Sayın ${ad}, Analiziniz Hazırlandı:`;
 
-    let evreRisk = "Genel döngü dengeli görünmekle birlikte, şahsi kod düğümleriniz incelenmelidir.";
-    for(let g in ZAMAN_ZEMIN) {
-        if(ayGun >= ZAMAN_ZEMIN[g].bas && ayGun <= ZAMAN_ZEMIN[g].bit) {
-            evreRisk = `⚠️ ${g} ZAMANI ETKİSİ: ${ZAMAN_ZEMIN[g].risk}`;
-        }
+    let aktifVakit = null;
+    for(let v of VAKIT_DONGUSU) {
+        if(ayGun >= v.bas && ayGun <= v.bit) { aktifVakit = v; break; }
     }
-    document.getElementById('evreGozlemi').innerHTML = evreRisk;
+    document.getElementById('vakitGozlemi').innerText = aktifVakit ? `${aktifVakit.gez} Vakti (${aktifVakit.burc} Burcu): Bu evredeki kod düğümleriniz sınav merkezinizdir.` : "Döngü geçiş aralığındasınız.";
 
     const liste = document.getElementById('evListesi');
     liste.innerHTML = "";
 
     for(let i=1; i<=12; i++) {
-        let isAzam = false;
-        let etkiAciklama = "Dönemsel Gözlem";
-        let mizaç = "cemal";
+        let isAzam = (ISMI_AZAM_MAP[kodNo] && ISMI_AZAM_MAP[kodNo].includes(aktifVakit?.gez));
+        let etkiTuru = "Dönemsel Gözlem";
+        let mizac = "cemal";
 
-        for(let g in ZAMAN_ZEMIN) {
-            const zd = ZAMAN_ZEMIN[g];
-            if(zd.azamEvler.includes(i)) {
-                // Eğer bu ev o gezegenin ana evi ise ve kod ile eşleşiyorsa
-                if(zd.kodlar[kodKey]) { isAzam = true; etkiAciklama = zd.kodlar[kodKey]; }
-                mizaç = etkiAciklama.toLowerCase().includes("celal") ? "celal" : "cemal";
-            }
+        if(aktifVakit?.evler.includes(i)) {
+            etkiTuru = i % 2 === 0 ? "İçsellikten Gelen" : "Dışsallıktan Gelen";
+            mizac = isAzam ? "celal" : "cemal";
         }
 
         const kart = document.createElement('div');
         kart.className = `ev-kart ${isAzam ? 'azam-kart' : ''}`;
-        const esmalar = (KOD_KUTUPHANESI[kodKey] && KOD_KUTUPHANESI[kodKey][i]) ? KOD_KUTUPHANESI[kodKey][i].join(", ") : "Dengeleyici Terkib Çalışılmalı";
+        kart.setAttribute('data-konu', EV_KONULARI[i]);
+        
+        const esmalar = (ESMA_BANKASI[kodKey] && ESMA_BANKASI[kodKey][i]) ? ESMA_BANKASI[kodKey][i].join(", ") : "Dengeleyici Terkib Gerekli";
 
         kart.innerHTML = `
             <div class="ev-no">${i}</div>
-            ${isAzam ? '<span class="azam-uyari">⚠️ İSMİ AZAM (ANA DÜĞÜM)</span>' : ''}
-            <span class="badge ${mizaç}">${mizaç.toUpperCase()} ETKİ</span>
-            <span class="etki-notu">${etkiAciklama}</span>
+            ${isAzam ? '<span class="azam-label">⚠️ İSMİ AZAM (ANA DÜĞÜM)</span>' : ''}
+            <span class="badge ${mizac}">${mizac.toUpperCase()} ETKİ</span>
+            <span class="sıkıntılı-text">${etkiTuru} Sıkıntı</span>
             <div class="esma-box">
-                <small style="color:#38bdf8; display:block; margin-bottom:4px;">STRATEJİK ANAHTAR:</small>
-                <span style="color:white; font-size:15px; font-weight:600;">${esmalar}</span>
+                <small style="color:#38bdf8; display:block; margin-bottom:5px;">STRATEJİK ANAHTAR:</small>
+                <span style="color:white; font-size:15px; font-weight:700;">${esmalar}</span>
             </div>
         `;
         liste.appendChild(kart);
