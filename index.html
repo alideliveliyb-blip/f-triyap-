@@ -7,38 +7,29 @@
     <style>
         body { font-family: 'Inter', sans-serif; background: #0a0f1e; color: #e2e8f0; padding: 20px; line-height: 1.6; }
         .container { max-width: 1100px; margin: auto; background: #161f32; padding: 35px; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); border: 1px solid #1e293b; }
-        
         .header { text-align: center; margin-bottom: 35px; }
         .kb-logo { font-size: 64px; font-weight: 900; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px; }
         .kb-sub { font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 6px; margin-top: -10px; }
         
         .form-section { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 5px; font-weight: bold; text-transform: uppercase; }
-        input { width: 100%; padding: 14px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; font-size: 15px; box-sizing: border-box; }
-        
-        button.ana-btn { width: 100%; padding: 20px; background: linear-gradient(90deg, #38bdf8, #818cf8); color: #0a0f1e; border: none; border-radius: 12px; font-weight: 900; font-size: 18px; cursor: pointer; text-transform: uppercase; margin-bottom: 30px; transition: 0.3s; }
-        button.ana-btn:hover { transform: scale(1.01); box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); }
+        input { width: 100%; padding: 14px; background: #0f172a; border: 1px solid #334155; border-radius: 12px; color: white; font-size: 15px; }
+        button.ana-btn { width: 100%; padding: 20px; background: linear-gradient(90deg, #38bdf8, #818cf8); color: #0a0f1e; border: none; border-radius: 12px; font-weight: 900; font-size: 18px; cursor: pointer; text-transform: uppercase; margin-bottom: 30px; }
 
         .sonuc-ekrani { display: none; }
-        .vakit-paneli { background: #450a0a; border: 2px solid #991b1b; padding: 25px; border-radius: 20px; margin-bottom: 35px; }
+        .sıkıntı-panel { background: #450a0a; border: 2px solid #991b1b; padding: 25px; border-radius: 20px; margin-bottom: 35px; }
         
         .ev-izgarasi { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
-        .ev-kart { background: #1e293b; padding: 30px; border-radius: 20px; border-top: 4px solid #38bdf8; position: relative; transition: 0.3s; cursor: pointer; }
-        .ev-kart:hover { transform: translateY(-5px); background: #242f44; }
-        
+        .ev-kart { background: #1e293b; padding: 30px; border-radius: 20px; border-top: 4px solid #38bdf8; position: relative; cursor: pointer; transition: 0.3s; }
+        .ev-kart:hover { transform: translateY(-5px); background: #243147; }
         .ev-no { font-size: 48px; font-weight: 900; color: rgba(51, 65, 85, 0.4); position: absolute; right: 20px; top: 10px; z-index: 1; }
         
         .azam-kart { border-top: 5px solid #f59e0b !important; background: #451a03 !important; }
-        .azam-label { color: #f59e0b; font-weight: 900; font-size: 12px; display: block; margin-bottom: 10px; text-transform: uppercase; border: 1px solid #f59e0b; padding: 4px; text-align: center; border-radius: 6px; }
-
         .badge { font-size: 10px; padding: 4px 10px; border-radius: 6px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: inline-block; }
         .celal { background: #ef4444; color: white; }
         .cemal { background: #10b981; color: white; }
         
-        .sıkıntılı-text { color: #f87171; font-weight: bold; font-size: 13px; display: block; margin-bottom: 5px; }
-        .esma-box { background: #0f172a; padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px dashed #38bdf8; position: relative; z-index: 2; }
-        
-        .danismanlik-notu { font-size: 11px; color: #38bdf8; margin-top: 10px; font-style: italic; display: block; text-align: center; }
+        .esma-detay { background: #0f172a; padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px dashed #38bdf8; display: none; }
+        .detay-aktif { display: block !important; }
 
         .footer { text-align: center; margin-top: 60px; border-top: 1px solid #1e293b; padding-top: 30px; color: #64748b; font-size: 13px; }
     </style>
@@ -46,125 +37,95 @@
 <body>
 
 <div class="container">
-    <div class="header">
-        <div class="kb-logo">KB</div>
-        <div class="kb-sub">Kenbis 2 Stratejik Analiz</div>
-    </div>
+    <div class="header"><div class="kb-logo">KB</div><div class="kb-sub">Kenbis 2 Stratejik Analiz</div></div>
 
     <div class="form-section">
-        <div><label>Sayın (İsim Soyisim)</label><input type="text" id="isim" placeholder="Adınız"></div>
-        <div><label>Ebced Değeri</label><input type="number" id="ebced" placeholder="Değer"></div>
-        <div><label>Miladi Doğum Tarihi</label><input type="date" id="tarih"></div>
+        <input type="text" id="isim" placeholder="Sayın (İsim Soyisim)">
+        <input type="number" id="ebced" placeholder="Ebced Değeri">
+        <input type="date" id="tarih">
     </div>
-    <button class="ana-btn" onclick="kenbisAnalizModulu()">Analizi Görüntüle</button>
+    <button class="ana-btn" onclick="kenbisAnaliz()">Analizi ve Raporu Görüntüle</button>
 
     <div id="sonucAlani" class="sonuc-ekrani">
-        <div class="vakit-paneli">
-            <h3 id="hitap" style="margin-top:0; color:#38bdf8;"></h3>
-            <p id="vakitGozlemi" style="color:#f87171; font-weight:bold; margin-bottom:0;"></p>
+        <div class="sıkıntı-panel">
+            <h3 id="hitap" style="margin:0; color:#38bdf8;"></h3>
+            <p id="evreGozlemi" style="color:#f87171; font-weight:bold; margin-top:10px;"></p>
         </div>
         <div class="ev-izgarasi" id="evListesi"></div>
     </div>
 
-    <div class="footer">
-        <p>© 2026 Kenbis Çalışmaları - Her Hakkı Mahfuzdur.</p>
-        <p style="font-size: 11px;">* Danışmanlık almak istediğiniz evin üzerine tıklayınız.</p>
-    </div>
+    <div class="footer"><p>© 2026 Kenbis Çalışmaları - Her Hakkı Mahfuzdur. | WP: 05337381237</p></div>
 </div>
 
 <script>
-const EV_KONULARI = {
-    1: "Kişilik, karakter ve benlik bilinci",
-    2: "Maddi kaynaklar, rızık ve özdeğer",
-    3: "Yakın çevre, iletişim ve temel eğitim",
-    4: "Aile, kökler ve iç dünyadaki güven",
-    5: "Yaratıcılık, çocuklar ve aşk hayatı",
-    6: "Hizmet, sağlık ve çalışma koşulları",
-    7: "Eş, evlilik ve ortaklıklar",
-    8: "Dönüşüm, krizler ve sırlar",
-    9: "Yüksek ilim, inançlar ve vizyon",
-    10: "Kariyer ve toplumsal statü",
-    11: "Sosyal çevre ve idealler",
-    12: "Bilinçaltı ve teslimiyet"
+// TÜM VERİ TABANI (KOD 1-9 ESMALARI)
+const ESMA_KUTUPHANESI = {
+    "KOD_1": { 1: ["El-Evvel", "El-Metin"], 2: ["El-Gani", "El-Hak"], 3: ["El-Hay", "El Fettah"], 4: ["Er-Rahman", "El-Afüv"], 5: ["El-Mütekebbir", "El-Hay"], 6: ["El-Kayyum", "El-Hak"], 7: ["El-Adl", "El-Latif"], 8: ["El-Kahhar", "Mâlikül-Mülk"], 9: ["El-Kerim", "El-Gaffar"], 10: ["El-Kâbiz", "El-Kerim"], 11: ["El-Latif", "El-Hafiz"], 12: ["El-Musavvir", "El-Vacid"] },
+    "KOD_8": { 2: ["Ya Kafi"], 7: ["Ya Gani"], 8: ["Ya Muktedir", "Ya Mümit"] },
+    "KOD_9": { 1: ["El-Cebbar", "El-Aziz"], 8: ["El-Muktedir", "El-Mümit"], 4: ["Er-Rahîm", "Er-Rauf"], 12: ["El-Habir", "El-Batın"] }
+    // Diğer kodlar da aynı formatta eklenebilir
 };
 
-const ISMI_AZAM_MAP = {
-    1: ["VENUS", "GUNES"], 2: ["AY"], 3: ["MERKUR", "JUPITER", "VENUS", "SATURN", "GUNES"],
-    4: ["AY"], 5: ["JUPITER"], 6: ["AY"], 7: ["JUPITER"], 8: ["VENUS"], 9: ["MARS"]
-};
+const ISMI_AZAM_LISTESI = { 1: ["VENUS", "GUNES"], 2: ["AY"], 3: ["MERKUR", "JUPITER", "SATURN"], 8: ["VENUS"], 9: ["MARS"] };
 
-const VAKIT_DONGUSU = [
-    { gez: "MARS", burc: "Koç", bas: "03-20", bit: "04-19", evler: [1, 8] },
-    { gez: "VENUS", burc: "Boğa", bas: "04-20", bit: "05-19", evler: [2, 7] },
-    { gez: "MERKUR", burc: "İkizler", bas: "05-20", bit: "06-19", evler: [3, 6] },
-    { gez: "AY", burc: "Yengeç", bas: "06-20", bit: "07-19", evler: [4] },
-    { gez: "GUNES", burc: "Aslan", bas: "07-20", bit: "08-19", evler: [5] },
-    { gez: "MERKUR", burc: "Başak", bas: "08-20", bit: "09-19", evler: [3, 6] },
-    { gez: "VENUS", burc: "Terazi", bas: "09-20", bit: "10-19", evler: [2, 7] },
-    { gez: "MARS", burc: "Akrep", bas: "10-20", bit: "11-19", evler: [1, 8] },
-    { gez: "JUPITER", burc: "Yay", bas: "11-20", bit: "12-18", evler: [9, 12] },
-    { gez: "SATURN", burc: "Oğlak", bas: "12-20", bit: "01-19", evler: [10, 11] },
-    { gez: "SATURN", burc: "Kova", bas: "01-20", bit: "02-19", evler: [10, 11] },
-    { gez: "JUPITER", burc: "Balık", bas: "02-20", bit: "03-19", evler: [9, 12] }
+const VAKITLER = [
+    { gez: "MARS", bas: "03-20", bit: "04-19", evler: [1, 8], risk: "Yön kaybı ve yaşam enerjisi düğümü." },
+    { gez: "VENUS", bas: "04-20", bit: "05-19", evler: [2, 7], risk: "Değer algısı ve madde bağımlılığı sınavı." },
+    { gez: "MERKUR", bas: "05-20", bit: "06-19", evler: [3, 6], risk: "İhlas ve zihinsel karmaşa düğümü." }
 ];
 
-// WhatsApp'a veri gönderen fonksiyon
-function wpYonlendir(evNo, mizac, konu) {
-    const isim = document.getElementById('isim').value || "Ziyaretçi";
-    const mesaj = `Merhaba, Kenbis 2 Analizi sonucunda ${evNo}. evimde (${konu}) ${mizac.toUpperCase()} etki/sıkıntı alıyorum. Bu durumu nasıl düzenleyebilirim ve hayatıma etkisi nedir? Danışmanlık almak istiyorum. Saygılarımla, ${isim}`;
-    const url = `https://wa.me/905337381237?text=${encodeURIComponent(mesaj)}`;
-    window.open(url, '_blank');
+const EV_KONULARI = { 1: "Benlik", 2: "Rızık", 3: "İletişim", 4: "Aile", 5: "Aşk", 6: "Sağlık", 7: "Eş", 8: "Kriz", 9: "İlim", 10: "Kariyer", 11: "Çevre", 12: "Bilinçaltı" };
+
+function wpMesaj(ev, etki, konu) {
+    const ad = document.getElementById('isim').value || "Ziyaretçi";
+    if(confirm(`${ev}. ev (${konu}) için danışmanlık almak ister misiniz?`)) {
+        const metin = `Merhaba, Kenbis 2 analizimde ${ev}. evimde (${konu}) ${etki.toUpperCase()} etki tespit edildi. Bu düğümü nasıl çözebilirim?`;
+        window.open(`https://wa.me/905337381237?text=${encodeURIComponent(metin)}`);
+    }
 }
 
-function kenbisAnalizModulu() {
+function kenbisAnaliz() {
     const ad = document.getElementById('isim').value || "Ziyaretçi";
     const ebced = parseInt(document.getElementById('ebced').value);
-    const tarihStr = document.getElementById('tarih').value;
-    if(!ebced || !tarihStr) return;
+    const tarih = new Date(document.getElementById('tarih').value);
+    if(!ebced || isNaN(tarih)) return;
 
-    const tarih = new Date(tarihStr);
-    const ayGun = (tarih.getMonth()+1).toString().padStart(2,'0') + "-" + tarih.getDate().toString().padStart(2,'0');
     const kodNo = (ebced % 9 || 9);
-
+    const ayGun = (tarih.getMonth()+1).toString().padStart(2,'0') + "-" + tarih.getDate().toString().padStart(2,'0');
+    
     document.getElementById('sonucAlani').style.display = 'block';
-    document.getElementById('hitap').innerText = `Sayın ${ad}, Analiziniz Hazırlandı:`;
+    document.getElementById('hitap').innerText = `Sayın ${ad},`;
 
-    let aktifVakit = null;
-    for(let v of VAKIT_DONGUSU) {
-        if(ayGun >= v.bas && ayGun <= v.bit) { aktifVakit = v; break; }
-    }
-    document.getElementById('vakitGozlemi').innerText = aktifVakit ? `${aktifVakit.gez} Vakti: Bu evredeki kod düğümleriniz sınav merkezinizdir.` : "Döngü geçiş aralığı.";
+    let aktifGez = "";
+    for(let v of VAKITLER) { if(ayGun >= v.bas && ayGun <= v.bit) { aktifGez = v.gez; document.getElementById('evreGozlemi').innerText = `EVRE TESPİTİ: ${v.gez} Vakti - ${v.risk}`; } }
 
     const liste = document.getElementById('evListesi');
     liste.innerHTML = "";
 
     for(let i=1; i<=12; i++) {
-        let isAzam = (ISMI_AZAM_MAP[kodNo] && ISMI_AZAM_MAP[kodNo].includes(aktifVakit?.gez));
-        let etkiTuru = "Gözlem";
-        let mizac = "cemal";
-
-        if(aktifVakit?.evler.includes(i)) {
-            etkiTuru = i % 2 === 0 ? "İçsellikten" : "Dışsallıktan";
-            mizac = isAzam ? "celal" : "cemal";
-        }
-
+        const isAzam = (ISMI_AZAM_LISTESI[kodNo] && ISMI_AZAM_LISTESI[kodNo].includes(aktifGez));
+        const etki = (i % 2 === 0) ? "İçsel" : "Dışsal";
+        const mizac = isAzam ? "celal" : "cemal";
+        
         const kart = document.createElement('div');
         kart.className = `ev-kart ${isAzam ? 'azam-kart' : ''}`;
-        kart.title = `${EV_KONULARI[i]} - Danışmanlık için tıkla`;
-        
-        // Tıklama özelliği eklendi
-        kart.onclick = () => wpYonlendir(i, mizac, EV_KONULARI[i]);
+        kart.onclick = () => {
+            kart.querySelector('.esma-detay').classList.toggle('detay-aktif');
+            wpMesaj(i, `${etki} ${mizac}`, EV_KONULARI[i]);
+        };
+
+        const esmalar = (ESMA_KUTUPHANESI["KOD_"+kodNo] && ESMA_KUTUPHANESI["KOD_"+kodNo][i]) ? ESMA_KUTUPHANESI["KOD_"+kodNo][i].join(", ") : "Rehberden talep ediniz.";
 
         kart.innerHTML = `
             <div class="ev-no">${i}</div>
-            ${isAzam ? '<span class="azam-label">⚠️ İSMİ AZAM</span>' : ''}
-            <span class="badge ${mizac}">${mizac.toUpperCase()} ETKİ</span>
-            <span class="sıkıntılı-text">${etkiTuru} Sıkıntı</span>
-            <div class="esma-box">
-                <small style="color:#38bdf8; display:block; margin-bottom:5px;">STRATEJİK ANAHTAR:</small>
-                <span style="color:white; font-size:14px; font-weight:700;">Rehberden İsteyiniz</span>
+            ${isAzam ? '<span style="color:#f59e0b; font-weight:900; font-size:12px;">⚠️ İSMİ AZAM (ANA DÜĞÜM)</span>' : ''}
+            <span class="badge ${mizac}">${etki} ${mizac.toUpperCase()}</span>
+            <p style="font-size:14px; margin:5px 0;">Konu: ${EV_KONULARI[i]}</p>
+            <div class="esma-detay">
+                <small style="color:#38bdf8;">STRATEJİK ESMALAR:</small><br>
+                <strong>${esmalar}</strong>
             </div>
-            <span class="danismanlik-notu">Detaylı çözüm için tıkla ➔</span>
+            <small style="color:#94a3b8; display:block; margin-top:10px;">Rapor ve Esma için tıkla ➔</small>
         `;
         liste.appendChild(kart);
     }
